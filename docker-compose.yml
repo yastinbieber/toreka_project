@@ -1,0 +1,41 @@
+version: "3.7"
+volumes:
+  db-store:
+  php-fpm-socket:
+services:
+  app:
+    build: ./docker/php
+    volumes:
+      - php-fpm-socket:/var/run/php-fpm
+      - .:/work/backend
+
+  web:
+    build: ./docker/nginx
+    ports:
+      - 80:80
+    volumes:
+      - php-fpm-socket:/var/run/php-fpm
+      - .:/work/backend
+
+  db:
+    build: ./docker/mysql
+    # for m1 mac
+    platform: linux/x86_64
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=laravel
+      - MYSQL_USER=default
+      - MYSQL_PASSWORD=localpass!
+    volumes:
+      - db-store:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=default
+      - PMA_PASSWORD=localpass!
+    ports:
+      - "8080:80"
