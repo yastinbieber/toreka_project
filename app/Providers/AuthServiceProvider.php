@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Post::class => PostPolicy::class,
+        TrRecord::class => TrRecordPolicy::class,
     ];
 
     /**
@@ -22,11 +22,11 @@ class AuthServiceProvider extends ServiceProvider
      * @return void
      */
 
-    // Policyを使用するから不要? 
+    // Policyを使用するから不要?
     // public function boot()
     // {
     //     $this->registerPolicies();
 
-    //     Gate::define('update-post', [PostPolicy::class, 'update']);
+    //     Gate::define('update-post', [TrRecordPolicy::class, 'update']);
     // }
 }
