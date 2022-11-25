@@ -16,14 +16,10 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Part</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="part" id="" value="{{ old('part')}}">
-                        <option selected="selected">胸</option>
-                        <option>脚</option>
-                        <option>肩</option>
-                        <option>背中</option>
-                        <option>二頭</option>
-                        <option>三頭</option>
-                        <option>腹</option>
+                    <select name="part" id="part-id" class="form-control"  value="{{ old('part')}}">
+                        @foreach (Config::get('pulldown.part_name') as $key => $val)
+                            <option value="{{ $key }}">{{ $val }}</option>
+                        @endforeach
                     </select>
                     @error('part')
                     <li>{{$message}}</li>
@@ -31,25 +27,29 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Set_type</label>
+                <label class="col-sm-2 col-form-label">Menu</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="set_type" id="" value="{{ old('set_type')}}">
-                        <option selected="selected">ノーマルセット</option>
-                        <option>スーパーセット</option>
-                        <option>ドロップセット</option>
-                        <option>ジャイアントセット</option>
-                        <option>その他(メモ欄へ)</option>
+                    <select name="menu" id="menu-id" class="form-control">
+                        <option value="" selected="selected">選択してください</option>
+                        <option value="ベンチプレス" data-val="胸">ベンチプレス</option>
+                        <option value="ダンベルプレス" data-val="胸">ダンベルプレス</option>
+                        <option value="スクワット" data-val="脚">スクワット</option>
+                        <option value="レッグプレス" data-val="脚">レッグプレス</option>
                     </select>
-                    @error('set_type')
+                    @error('menu')
                     <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Menu</label>
+                <label class="col-sm-2 col-form-label">Set_type</label>
                 <div class="col-sm-10">
-                    <input type="text" name="menu" class="form-control" value="{{ old('menu')}}" placeholder="メニューを入力ください">
-                    @error('menu')
+                    <select name="set_type" id="settype-id" class="form-control">
+                        @foreach (Config::get('pulldown.settype_name') as $key => $val)
+                            <option value="{{ $key }}">{{ $val }}</option>
+                        @endforeach
+                    </select>
+                    @error('set_type')
                     <li>{{$message}}</li>
                     @enderror
                 </div>
@@ -149,6 +149,7 @@
                     @enderror
                 </div>
             </div>
+            <!-- memo -->
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Memo</label>
                 <div class="col-sm-10">
@@ -165,5 +166,23 @@
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    var $menu = $('select[id="menu-id"]');
+    var original = $menu.html();
+
+    $('select[id="part-id"]').change(function() {
+        var val1 = $(this).val();
+        // $menu.find('option').each(function() {
+        $menu.html(original).find('option').each(function() {
+        var val2 = $(this).data('val');
+        if (val1 === val2) {
+            $(this).show();
+        }else {
+            $(this).hide();
+        }
+    })
+})
+</script>
 
 @endsection

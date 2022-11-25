@@ -9,6 +9,7 @@ use App\Models\TrRecord;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use DataTables;
 
 class TrRecordController extends Controller
 {
@@ -17,7 +18,7 @@ class TrRecordController extends Controller
         $trRecords = TrRecord::orderBy('tr_date', 'desc')->paginate(10);
         return view('trrecords.index', ['trRecords' => $trRecords]);
 
-    }
+}
 
     public function show(Request $request, $id) {
 
@@ -64,19 +65,23 @@ class TrRecordController extends Controller
         return redirect()->route('trrecords.index')->with('message', '登録が完了しました');
     }
 
+
     public function edit(Request $request, $id) {
+
         $trRecord = TrRecord::find($id);
         $this->authorize('update', $trRecord);
 
         return view('trrecords.edit', ['trRecord' => $trRecord]);
     }
 
-    public function update(TrRecordRequest $request) {
+
+    public function update(TrRecordRequest $request, $id) {
+
         $validated = $request->safe()->only(['part', 'menu', 'set_type', 'weight_first', 'reps_first']);
 
-        $trRecord = new TrRecord();
+        $trRecord = TrRecord::find($id);
         $this->authorize('update', $trRecord);
-        // $trRecord->user_id = Auth::id();
+
         $trRecord->part = $validated["part"];
         $trRecord->menu = $validated["menu"];
         $trRecord->set_type = $validated["set_type"];
@@ -98,7 +103,7 @@ class TrRecordController extends Controller
 		}
 
         $trRecord->save();
-        return redirect()->route('trrecords.index')->with('message', '編集が完了しました');
+        return redirect()->route('trrecords.index')->with('message', '修正が完了しました');
     }
 
     public function destroy(Request $request, $id) {
