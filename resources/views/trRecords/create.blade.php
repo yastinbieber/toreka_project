@@ -10,15 +10,15 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
-                    <input type="datetime-local" name="tr_date" class="form-control">
+                    <input type="datetime-local" name="tr_date" class="form-control" value="{{ old('tr_date')}}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Part</label>
                 <div class="col-sm-10">
-                    <select name="part" id="part-id" class="form-control"  value="{{ old('part')}}">
+                    <select name="part" id="part-id" class="form-control" value="{{ old('part')}}">
                         @foreach (Config::get('pulldown.part_name') as $key => $val)
-                            <option value="{{ $key }}">{{ $val }}</option>
+                            <option value="{{ $key }}"> {{ $val }} </option>
                         @endforeach
                     </select>
                     @error('part')
