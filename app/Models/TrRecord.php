@@ -14,4 +14,12 @@ class TrRecord extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function trPart() {
+        return $this->hasOne(TrPart::class);
+    }
+
+    public function trSettype() {
+        return $this->hasOne(TrSettype::class);
+    }
+
 }

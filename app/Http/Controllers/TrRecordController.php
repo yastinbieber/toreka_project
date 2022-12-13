@@ -7,37 +7,56 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TrRecordRequest;
 use App\Models\TrRecord;
 use App\Models\User;
+use App\Models\TrPart;
+use App\Models\TrMenu;
+use App\Models\TrSettype;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DataTables;
 
 class TrRecordController extends Controller
 {
+
     public function index(Request $request) {
 
         $trRecords = TrRecord::orderBy('tr_date', 'desc')->paginate(10);
-        return view('trrecords.index', ['trRecords' => $trRecords]);
+        return view('trrecords.index', compact('trRecords'));
 
-}
+    }
 
     public function show(Request $request, $id) {
 
         $trRecord = TrRecord::find($id);
         $user = User::find($id);
-
-        return view('trrecords.show', ['trRecord' => $trRecord, 'user' => $user]);
+        return view('trrecords.show', compact(
+            'trRecord',
+            'user'
+        ));
 
     }
 
     public function create() {
 
-        return view('trrecords.create');
+        $trParts = TrPart::pluck('part_name', 'id');
+        $trSettypes = TrSettype::pluck('set_type', 'id');
+        $trMenu = TrMenu::pluck('menu', 'id', 'tr_part_id');
+        return view('trrecords.create', compact(
+            'trParts',
+            'trSettypes',
+            'trMenu',
+        ));
 
     }
 
     public function store(TrRecordRequest $request) {
 
-        $validated = $request->safe()->only(['part', 'menu', 'set_type', 'weight_first', 'reps_first']);
+        $validated = $request->safe()->only([
+            'part',
+            'menu',
+            'set_type',
+            'weight_first',
+            'reps_first'
+        ]);
 
         $trRecord = new TrRecord();
         $trRecord->user_id = Auth::id();
@@ -62,7 +81,15 @@ class TrRecordController extends Controller
 		}
 
         $trRecord->save();
-        return redirect()->route('trrecords.index')->with('message', '登録が完了しました');
+        return redirect()->route('trrecords.index')->with(
+            'message', '登録が完了しました'
+        );
+    }
+
+    public function addContent(Request $request) {
+        $menuVal = $request['menu_val'];
+        $trMenu = TrMenu::where('tr_part_id', $menuVal)->get();
+        return $trMenu;
     }
 
 
@@ -71,13 +98,19 @@ class TrRecordController extends Controller
         $trRecord = TrRecord::find($id);
         $this->authorize('update', $trRecord);
 
-        return view('trrecords.edit', ['trRecord' => $trRecord]);
+        return view('trrecords.edit', compact('trRecord'));
     }
 
 
     public function update(TrRecordRequest $request, $id) {
 
-        $validated = $request->safe()->only(['part', 'menu', 'set_type', 'weight_first', 'reps_first']);
+        $validated = $request->safe()->only([
+            'part',
+            'menu',
+            'set_type',
+            'weight_first',
+            'reps_first'
+        ]);
 
         $trRecord = TrRecord::find($id);
         $this->authorize('update', $trRecord);
@@ -103,7 +136,9 @@ class TrRecordController extends Controller
 		}
 
         $trRecord->save();
-        return redirect()->route('trrecords.index')->with('message', '修正が完了しました');
+        return redirect()->route('trrecords.index')->with(
+            'message', '修正が完了しました'
+        );
     }
 
     public function destroy(Request $request, $id) {

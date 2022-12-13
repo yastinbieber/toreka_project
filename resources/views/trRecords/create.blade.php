@@ -5,7 +5,7 @@
 <div class="container">
     <h4>トレーニングを登録する</h4>
     <div class="border rounded p-5">
-        <form method="post" action="{{ url('/trrecords') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ url('/trrecords') }}">
             {{ csrf_field() }} <!-- CSRF対策 -->
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Date</label>
@@ -16,37 +16,42 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Part</label>
                 <div class="col-sm-10">
-                    <select name="part" id="part-id" class="form-control" value="{{ old('part')}}">
-                        @foreach (Config::get('pulldown.part_name') as $key => $val)
-                            <option value="{{ $key }}"> {{ $val }} </option>
+                    <select class="form-control" id="part_id" name="part">
+                        <option value="" style="display: none;">選択してください</option>
+                        @foreach ($trParts as $index => $name)
+                            <option value="{{ $name }}">{{ $name }}</option>
                         @endforeach
                     </select>
-                    @error('part')
-                    <li>{{$message}}</li>
-                    @enderror
+                    {{-- @error('part')
+                        <li>{{$message}}</li>
+                    @enderror --}}
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Menu</label>
                 <div class="col-sm-10">
-                    <select name="menu" id="menu-id" class="form-control">
+                    {{-- <select name="menu" id="menu_id" class="form-control">
                         <option value="" selected="selected">選択してください</option>
                         <option value="ベンチプレス" data-val="胸">ベンチプレス</option>
-                        <option value="ダンベルプレス" data-val="胸">ダンベルプレス</option>
                         <option value="スクワット" data-val="脚">スクワット</option>
-                        <option value="レッグプレス" data-val="脚">レッグプレス</option>
+                    </select> --}}
+                    <select class="form-control" id="menu_id" name="menu">
+                        @foreach ($trMenu as $index => $name)
+                            <option value="{{ $name }}" data-val="">{{ $name }}</option>
+                        @endforeach
                     </select>
-                    @error('menu')
-                    <li>{{$message}}</li>
-                    @enderror
+                    {{-- @error('menu')
+                        <li>{{$message}}</li>
+                    @enderror --}}
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Set_type</label>
                 <div class="col-sm-10">
-                    <select name="set_type" id="settype-id" class="form-control">
-                        @foreach (Config::get('pulldown.settype_name') as $key => $val)
-                            <option value="{{ $key }}">{{ $val }}</option>
+                    <select class="form-control" id="settype_id" name="set_type">
+                        <option value="" style="display: none;">選択してください</option>
+                        @foreach ($trSettypes as $trSettype)
+                            <option value="{{ $trSettype }}">{{ $trSettype }}</option>
                         @endforeach
                     </select>
                     @error('set_type')
@@ -159,19 +164,17 @@
                     @enderror
                 </div>
             </div>
-
-
             <input class="btn btn-info btn-sm" type="submit" value="送信">
             <a class="btn btn-success btn-sm" href="/trrecords">戻る</a>
         </form>
     </div>
 </div>
 
-<script type="text/javascript">
-    var $menu = $('select[id="menu-id"]');
+{{-- <script type="text/javascript">
+    var $menu = $('select[id="menu_id"]');
     var original = $menu.html();
 
-    $('select[id="part-id"]').change(function() {
+    $('select[id="part_id"]').change(function() {
         var val1 = $(this).val();
         // $menu.find('option').each(function() {
         $menu.html(original).find('option').each(function() {
@@ -183,6 +186,36 @@
         }
     })
 })
+</script> --}}
+
+<script type="text/javascript">
+// セレクトボックスの連動
+// 親カテゴリのselect要素が変更になるとイベントが発生
+$('#part_id').change(function () {
+    var part_val = $(this).val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/addContent',
+        type: 'POST',
+        data: {'menu_val' : part_val},
+        datatype: 'json',
+    })
+    .done(function(data) {
+        // 子カテゴリのoptionを一旦削除
+        $('#menu_id option').remove();
+        // DBから受け取ったデータを子カテゴリのoptionにセット
+        $.each(data, function(key, value) {
+            $('#menu_id').append($('<option>').text(value.name).attr('value', key));
+        })
+    })
+    .fail(function() {
+        console.log('失敗');
+    });
+
+});
 </script>
 
 @endsection
