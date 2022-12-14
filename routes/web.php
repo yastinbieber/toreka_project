@@ -22,6 +22,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('trrecords', TrRecordController::class);
     Route::post('/addContent', [App\Http\Controllers\TrRecordController::class, 'addContent'])->name('add.content');
-
+    Route::resource('users', UserController::class);
 });
 Auth::routes();

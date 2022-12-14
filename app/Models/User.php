@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'area',
+        'birthday',
+        'text',
+        'gender',
+        'age',
     ];
 
     /**
@@ -42,6 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * リレーション
+     *
+     *
+     */
     public function trRecords() {
         return $this->hasMany(TrRecord::class);
     }
