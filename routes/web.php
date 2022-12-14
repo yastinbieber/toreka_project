@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TrRecordController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('trrecords', TrRecordController::class);
     Route::post('/addContent', [App\Http\Controllers\TrRecordController::class, 'addContent'])->name('add.content');
     Route::resource('users', UserController::class);
+    Route::resource('dashboard', DashboardController::class);
 });
 Auth::routes();
