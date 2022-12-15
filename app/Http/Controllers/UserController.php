@@ -10,6 +10,7 @@ use App\Models\TrPart;
 use App\Models\TrMenu;
 use App\Models\TrSettype;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -42,7 +43,7 @@ class UserController extends Controller
         $user->birthday = $validated["birthday"];
         $user->gender = $validated["gender"];
         $user->text = $request->text;
-        $user->age = $request->age;
+        $user->age = Carbon::parse($user->birthday)->age;
         $user->save();
 
         return redirect()->route('users.index')->with(

@@ -21,8 +21,8 @@
                 <label class="col-sm-2 col-form-label">Area</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="area" name="area">
-                        @foreach(config('pulldown.area') as $name)
-                            <option value="{{ $name }}">{{ $name }}</option>
+                        @foreach(config('pulldown.area') as $key => $name)
+                            <option value="{{ $name }}" @if(old('term', $user->area ?? '') == $name) selected @endif>{{ $name }}</option>
                         @endforeach
                     </select>
                 </div>
