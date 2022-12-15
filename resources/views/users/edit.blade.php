@@ -22,7 +22,7 @@
                 <div class="col-sm-10">
                     <select class="form-control" id="area" name="area">
                         @foreach(config('pulldown.area') as $key => $name)
-                            <option value="{{ $name }}" @if(old('term', $user->area ?? '') == $name) selected @endif>{{ $name }}</option>
+                            <option value="{{ $name }}" @if(old('area', $user->area ?? '') == $name) selected @endif>{{ $name }}</option>
                         @endforeach
                     </select>
                 </div>
