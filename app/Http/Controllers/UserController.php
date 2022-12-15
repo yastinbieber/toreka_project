@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\TrPart;
 use App\Models\TrMenu;
 use App\Models\TrSettype;
+use App\Models\IdealWeight;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 

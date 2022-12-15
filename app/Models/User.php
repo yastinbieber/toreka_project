@@ -56,4 +56,8 @@ class User extends Authenticatable
         return $this->hasMany(TrRecord::class);
     }
 
+    public function idealWeights() {
+        return $this->hasMany(IdealWeight::class);
+    }
+
 }

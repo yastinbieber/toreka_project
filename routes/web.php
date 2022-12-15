@@ -26,5 +26,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/addContent', [App\Http\Controllers\TrRecordController::class, 'addContent'])->name('add.content');
     Route::resource('users', UserController::class);
     Route::resource('dashboard', DashboardController::class);
+    Route::resource('idealweights', IdealWeightController::class);
 });
 Auth::routes();
