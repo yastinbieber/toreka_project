@@ -86,12 +86,6 @@ class TrRecordController extends Controller
         );
     }
 
-    public function addContent(Request $request) {
-        $menuVal = $request['menu_val'];
-        $trMenu = TrMenu::where('tr_part_id', $menuVal)->get();
-        return $trMenu;
-    }
-
 
     public function edit(Request $request, $id) {
 

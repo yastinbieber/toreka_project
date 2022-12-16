@@ -198,8 +198,8 @@ $('#part_id').change(function () {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        url: '/addContent',
-        type: 'POST',
+        url: '/webapi',
+        type: 'GET',
         data: {'menu_val' : part_val},
         datatype: 'json',
     })
@@ -207,9 +207,10 @@ $('#part_id').change(function () {
         // 子カテゴリのoptionを一旦削除
         $('#menu_id option').remove();
         // DBから受け取ったデータを子カテゴリのoptionにセット
-        $.each(data, function(key, value) {
-            $('#menu_id').append($('<option>').text(value.name).attr('value', key));
-        })
+        // for文
+        // $.each(data, function(key, value) {
+        //     $('#menu_id').append($('<option>').text(value.name).attr('value', key));
+        // })
     })
     .fail(function() {
         console.log('失敗');
