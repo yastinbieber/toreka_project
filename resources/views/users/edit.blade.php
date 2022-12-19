@@ -49,10 +49,10 @@
                     </div>
                 </label>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-3 pt-4">
                 <label class="col-sm-2 col-form-label">Text</label>
                 <div class="col-sm-10">
-                    <input type="text" name="text" class="form-control" value="{{ old('text', $user->text)}}" placeholder="メモ" min="0">
+                    <textarea class="form-control" rows="10" name="text" placeholder="メモ">{{ $user->text }}</textarea>
                     @error('gender')
                         <li>{{$message}}</li>
                     @enderror

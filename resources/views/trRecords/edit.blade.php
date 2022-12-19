@@ -154,7 +154,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Memo</label>
                 <div class="col-sm-10">
-                    <input type="text" name="memo" class="form-control" value="{{ old('memo', $trRecord->memo)}}" placeholder="メモ">
+                    <textarea name="memo" class="form-control" rows="3" cols="30" placeholder="memo">{{ $trRecord->memo }}</textarea>
                     @error('memo')
                         <li>{{$message}}</li>
                     @enderror
