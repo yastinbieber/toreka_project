@@ -16,7 +16,7 @@ class WeightRecordController extends Controller
      */
     public function index()
     {
-        //
+        return view('weightrecord.index');
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Weight_Record extends Model
+class WeightRecord extends Model
 {
     use HasFactory;
 
