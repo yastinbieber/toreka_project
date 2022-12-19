@@ -7,7 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WebApiController;
 use App\Http\Controllers\IdealWeightController;
 use App\Http\Controllers\WeightRecordController;
-use App\Http\Controllers\HowtovideoController;
+use App\Http\Controllers\HowtoVideoController;
 use App\Http\Controllers\UserMotivationController;
 
 /*
