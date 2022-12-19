@@ -60,4 +60,8 @@ class User extends Authenticatable
         return $this->hasMany(IdealWeight::class);
     }
 
+    public function weightRecords() {
+        return $this->hasMany(WeightRecord::class);
+    }
+
 }

@@ -2,9 +2,9 @@
 @section('title', '')
 @section('content')
 <div class="container">
-    @if (session('msg'))
+    @if (session('message'))
         <div class="alert alert-danger">
-            {{ session('msg') }}
+            {{ session('message') }}
             <a class="btn btn-success btn-sm" href="/idealweights">戻る</a>
         </div>
     @endif

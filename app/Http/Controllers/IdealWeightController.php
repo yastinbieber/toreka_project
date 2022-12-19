@@ -18,7 +18,7 @@ class IdealWeightController extends Controller
         $user_id = Auth::id();
         if (IdealWeight::where('user_id', $user_id)->exists()) {
             return redirect()->route('idealweights.index')->with(
-                'msg', 'ボディメイク目標は既に登録済みです'
+                'message', 'ボディメイク目標は既に登録済みです'
             );
         }
         return view('idealweights.create');
