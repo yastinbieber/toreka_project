@@ -64,4 +64,8 @@ class User extends Authenticatable
         return $this->hasMany(WeightRecord::class);
     }
 
+    public function userMotivations() {
+        return $this->hasMany(UserMotivation::class);
+    }
+
 }
