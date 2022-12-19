@@ -21,13 +21,12 @@ class UserController extends Controller
 
     public function show(Request $request, $id) {
         $user = User::find($id);
-        // $user = Auth::id();
         return view('users.show', compact('user'));
     }
 
     public function edit(Request $request, $id) {
-        // $user = Auth::id();
         $user = User::find($id);
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -40,9 +39,12 @@ class UserController extends Controller
         ]);
 
         $user = User::find($id);
+        $this->authorize('update', $user);
+
         $user->area = $validated["area"];
         $user->birthday = $validated["birthday"];
         $user->gender = $validated["gender"];
+
         $user->text = $request->text;
         $user->age = Carbon::parse($user->birthday)->age;
         $user->save();
@@ -51,4 +53,8 @@ class UserController extends Controller
             'message', 'ユーザー情報を登録しました'
         );
     }
+
+    // public function destroy() {
+
+    // }
 }

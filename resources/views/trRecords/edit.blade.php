@@ -17,7 +17,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Part</label>
                 <div class="col-sm-10">
-                    <select name="part" id="part-id" class="form-control"  value="{{ old('part', $trRecord->part)}}">
+                    <select name="part" id="part-id" class="form-control" value="{{ old('part', $trRecord->part)}}">
                         @foreach (Config::get('pulldown.part_name') as $key => $val)
                             <option value="{{ $key }}">{{ $val }}</option>
                         @endforeach

@@ -24,17 +24,6 @@ class TrRecordController extends Controller
 
     }
 
-    public function show(Request $request, $id) {
-
-        $trRecord = TrRecord::find($id);
-        $user = User::find($id);
-        return view('trrecords.show', compact(
-            'trRecord',
-            'user'
-        ));
-
-    }
-
     public function create() {
 
         $trParts = TrPart::pluck('part_name', 'id');
@@ -84,6 +73,17 @@ class TrRecordController extends Controller
         return redirect()->route('trrecords.index')->with(
             'message', '登録が完了しました'
         );
+    }
+
+    public function show(Request $request, $id) {
+
+        $trRecord = TrRecord::find($id);
+        $user = User::find($id);
+        return view('trrecords.show', compact(
+            'trRecord',
+            'user'
+        ));
+
     }
 
 

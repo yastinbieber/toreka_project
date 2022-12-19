@@ -60,6 +60,9 @@
             </div>
             <input class="btn btn-info btn-sm" type="submit" value="送信">
             <a class="btn btn-success btn-sm" href="/trrecords">戻る</a>
+            @can('update', $user)
+                <a class="btn btn-info btn-sm" href="{{ url('users/'.$user->id) }}">詳細</a>
+            @endcan
         </form>
     </div>
 </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\TrRecordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WebApiController;
+use App\Http\Controllers\IdealWeightController;
 
 /*
 |--------------------------------------------------------------------------
