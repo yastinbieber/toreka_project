@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class IdealWeight extends Model
+class UserMotivation extends Model
 {
     use HasFactory;
 
@@ -13,11 +13,7 @@ class IdealWeight extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function weightRecords() {
-        return $this->hasMany(WeightRecord::class);
-    }
-
-    public function userMotivations() {
-        return $this->hasMany(UserMotivation::class);
+    public function idealWeight() {
+        return $this->belongsTo(IdealWeight::class);
     }
 }

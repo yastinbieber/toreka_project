@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WebApiController;
 use App\Http\Controllers\IdealWeightController;
+use App\Http\Controllers\UserMotivationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('dashboard', DashboardController::class);
     Route::resource('idealweights', IdealWeightController::class);
+    Route::resource('usermotivations', UserMotivationController::class);
     Route::get('webapi', [WebApiController::class, 'getTrainingMenu'])->name('webapi');
 });
 Auth::routes();
