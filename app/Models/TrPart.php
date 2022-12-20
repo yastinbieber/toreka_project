@@ -11,7 +11,7 @@ class TrPart extends Model
     protected $fillable = ['part'];
 
     public function trRecord() {
-        return $this->hasOne(TrRecord::class);
+        return $this->belongsTo(TrRecord::class);
     }
 
     public function trMenus() {

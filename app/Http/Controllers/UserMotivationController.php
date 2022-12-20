@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Http\Requests\UserMotivationRequest;
 use App\Models\IdealWeight;
+use App\Models\UserMotivation;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserMotivationController extends Controller
 {
@@ -15,7 +18,7 @@ class UserMotivationController extends Controller
      */
     public function index()
     {
-        //
+        return view('usermotivations.index');
     }
 
     /**
@@ -25,7 +28,13 @@ class UserMotivationController extends Controller
      */
     public function create()
     {
-        //
+        $user_id = Auth::id();
+        if (userMotivation::where('user_id', $user_id)->exists()) {
+            return redirect()->route('usermotivations.index')->with(
+                'message', 'ボディメイク目標は既に登録済みです'
+            );
+        }
+        return view('usermotivations.create');
     }
 
     /**
@@ -34,9 +43,28 @@ class UserMotivationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserMotivationRequest $request)
     {
-        //
+        $validated = $request->safe()->only([
+            'training_frequency',
+            'purpose',
+        ]);
+
+        $userMotivation = new userMotivation();
+
+        // バリデーション
+        $userMotivation->training_frequency = $validated['training_frequency'];
+        $userMotivation->purpose = $validated['purpose'];
+
+        $userMotivation->user_id = Auth::id();
+        // $userMotivation->ideal_weight_id = ;
+        $userMotivation->ideal_weight_id = IdealWeight::where('user_id', '=', Auth::id())->first()->id;
+
+        $userMotivation->save();
+
+        return redirect()->route('usermotivations.index')->with(
+            'message', '登録が完了しました'
+        );
     }
 
     /**
@@ -47,7 +75,10 @@ class UserMotivationController extends Controller
      */
     public function show($id)
     {
-        //
+        $userMotivation = userMotivation::find($id);
+        return view('usermotivations.show', compact(
+            'userMotivation'
+        ));
     }
 
     /**
@@ -58,7 +89,10 @@ class UserMotivationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $userMotivation = userMotivation::find($id);
+        $this->authorize('update', $userMotivation);
+
+        return view('usermotivations.edit', compact('userMotivation'));
     }
 
     /**
@@ -68,9 +102,28 @@ class UserMotivationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserMotivationRequest $request, $id)
     {
-        //
+        $validated = $request->safe()->only([
+            'training_frequency',
+            'purpose',
+        ]);
+
+        $userMotivation = UserMotivation::find($id);
+        $this->authorize('update', $userMotivation);
+
+        // バリデーション
+        $userMotivation->training_frequency = $validated['training_frequency'];
+        $userMotivation->purpose = $validated['purpose'];
+
+        $userMotivation->user_id = Auth::id();
+        $userMotivation->ideal_weight_id = IdealWeight::where('user_id', '=', Auth::id())->first()->id;
+
+        $userMotivation->save();
+
+        return redirect()->route('usermotivations.index')->with(
+            'message', '修正が完了しました'
+        );
     }
 
     /**

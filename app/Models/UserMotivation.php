@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserMotivation extends Model
 {
     use HasFactory;
+    protected $fillable = ['training_frequency','purpose', 'ideal_weight_id'];
 
     public function user() {
         return $this->belongsTo(User::class);

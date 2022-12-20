@@ -106,6 +106,7 @@ class IdealWeightController extends Controller
     }
 
     public function edit(Request $request, $id) {
+
         $idealWeight = IdealWeight::find($id);
         $this->authorize('update', $idealWeight);
 
@@ -113,6 +114,7 @@ class IdealWeightController extends Controller
     }
 
     public function update(IdealWeightRequest $request, $id) {
+
         $validated = $request->safe()->only([
             'height',
             'weight',
