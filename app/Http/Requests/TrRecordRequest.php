@@ -24,6 +24,7 @@ class TrRecordRequest extends FormRequest
     public function rules()
     {
         return [
+            'tr_date' => 'required',
             'part' => 'required',
             'menu' => 'required',
             'set_type' => 'required',
@@ -35,6 +36,7 @@ class TrRecordRequest extends FormRequest
     public function messages()
     {
         return [
+            'tr_date.required' => '日付の入力は必須です',
             'part.required' => '部位の入力は必須です',
             'menu.required' => 'メニューの入力は必須です',
             'set_type.required' => 'セットタイプの入力は必須です',

@@ -3,6 +3,11 @@
 @section('content')
 
 <div class="container">
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
     <h4>目標を設定する</h4>
     <div class="border rounded p-5">
         <form method="post" action="{{ url('/idealweights') }}">

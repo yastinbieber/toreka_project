@@ -94,7 +94,7 @@ class IdealWeightController extends Controller
         $idealWeight->save();
 
         return redirect()->route('idealweights.index')->with(
-            'message', '登録が完了しました'
+            'message', '基本情報の入力が完了したので、次に目標を登録しましょう'
         );
     }
 

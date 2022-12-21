@@ -11,6 +11,9 @@
                 <label class="col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
                     <input type="datetime-local" name="tr_date" class="form-control" value="{{ old('tr_date')}}">
+                    @error('tr_date')
+                        <li>{{$message}}</li>
+                    @enderror
                 </div>
             </div>
             <div class="row mb-3">
@@ -22,27 +25,27 @@
                             <option value="{{ $name }}">{{ $name }}</option>
                         @endforeach
                     </select>
-                    {{-- @error('part')
+                    @error('part')
                         <li>{{$message}}</li>
-                    @enderror --}}
+                    @enderror
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Menu</label>
                 <div class="col-sm-10">
-                    {{-- <select name="menu" id="menu_id" class="form-control">
+                    <select name="menu" id="menu_id" class="form-control">
                         <option value="" selected="selected">選択してください</option>
                         <option value="ベンチプレス" data-val="胸">ベンチプレス</option>
                         <option value="スクワット" data-val="脚">スクワット</option>
-                    </select> --}}
-                    <select class="form-control" id="menu_id" name="menu">
+                    </select>
+                    {{-- <select class="form-control" id="menu_id" name="menu">
                         @foreach ($trMenu as $index => $name)
                             <option value="{{ $name }}" data-val="">{{ $name }}</option>
                         @endforeach
-                    </select>
-                    {{-- @error('menu')
+                    </select> --}}
+                    @error('menu')
                         <li>{{$message}}</li>
-                    @enderror --}}
+                    @enderror
                 </div>
             </div>
             <div class="row mb-3">
@@ -170,7 +173,7 @@
     </div>
 </div>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     var $menu = $('select[id="menu_id"]');
     var original = $menu.html();
 
@@ -186,9 +189,9 @@
         }
     })
 })
-</script> --}}
+</script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 // セレクトボックスの連動
 // 親カテゴリのselect要素が変更になるとイベントが発生
 $('#part_id').change(function () {
@@ -217,6 +220,6 @@ $('#part_id').change(function () {
     });
 
 });
-</script>
+</script> --}}
 
 @endsection

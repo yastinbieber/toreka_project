@@ -29,12 +29,20 @@ class UserMotivationController extends Controller
     public function create()
     {
         $user_id = Auth::id();
-        if (userMotivation::where('user_id', $user_id)->exists()) {
-            return redirect()->route('usermotivations.index')->with(
-                'message', 'ボディメイク目標は既に登録済みです'
+        // ログインユーザーのIdealWeightレコードが作られていたら処理を実行する
+        if (IdealWeight::where('user_id', $user_id)->exists()) {
+            if (userMotivation::where('user_id', $user_id)->exists()) {
+                return redirect()->route('usermotivations.index')->with(
+                    'message', 'ボディメイク目標は既に登録済みです'
+                );
+            }
+            return view('usermotivations.create');
+        } else {
+            return redirect()->route('idealweights.create')->with(
+                'message', 'まずボディメイク目標から登録しましょう',
             );
         }
-        return view('usermotivations.create');
+
     }
 
     /**

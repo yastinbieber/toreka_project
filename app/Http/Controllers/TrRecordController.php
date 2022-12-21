@@ -26,9 +26,9 @@ class TrRecordController extends Controller
 
     public function create() {
 
-        $trParts = TrPart::pluck('part_name', 'id');
-        $trSettypes = TrSettype::pluck('set_type', 'id');
-        $trMenu = TrMenu::pluck('menu', 'id', 'tr_part_id');
+        $trParts = TrPart::pluck('part_name', 'id')->toArray();
+        $trSettypes = TrSettype::pluck('set_type', 'id')->toArray();
+        $trMenu = TrMenu::pluck('menu', 'id', 'tr_part_id')->toArray();
         return view('trrecords.create', compact(
             'trParts',
             'trSettypes',
@@ -49,27 +49,8 @@ class TrRecordController extends Controller
 
         $trRecord = new TrRecord();
         $trRecord->user_id = Auth::id();
-        $trRecord->part = $validated["part"];
-        $trRecord->menu = $validated["menu"];
-        $trRecord->set_type = $validated["set_type"];
-        $trRecord->weight_first = $validated["weight_first"];
-        $trRecord->reps_first = $validated["reps_first"];
-        $trRecord->weight_second = $request->weight_second;
-        $trRecord->reps_second = $request->reps_second;
-        $trRecord->weight_third = $request->weight_third;
-        $trRecord->reps_third = $request->reps_third;
-        $trRecord->weight_fourth = $request->weight_fourth;
-        $trRecord->reps_fourth = $request->reps_fourth;
-        $trRecord->weight_fifth = $request->weight_fifth;
-        $trRecord->reps_fifth = $request->reps_fifth;
-        $trRecord->memo = $request->memo;
-        if($request->tr_date === null) {
-			$trRecord->tr_date = Carbon::now('Asia/Tokyo');
-		} else {
-			$trRecord->tr_date = $request->tr_date;
-		}
+        $trRecord->fill($request->all())->save();
 
-        $trRecord->save();
         return redirect()->route('trrecords.index')->with(
             'message', '登録が完了しました'
         );
@@ -90,9 +71,18 @@ class TrRecordController extends Controller
     public function edit(Request $request, $id) {
 
         $trRecord = TrRecord::find($id);
+        // dd($trRecord);
+        $trParts = TrPart::pluck('part_name', 'id')->toArray();
+        $trSettypes = TrSettype::pluck('set_type', 'id');
+        $trMenu = TrMenu::pluck('menu', 'id', 'tr_part_id');
         $this->authorize('update', $trRecord);
 
-        return view('trrecords.edit', compact('trRecord'));
+        return view('trrecords.edit', compact(
+            'trRecord',
+            'trParts',
+            'trSettypes',
+            'trMenu',
+        ));
     }
 
 
@@ -108,28 +98,8 @@ class TrRecordController extends Controller
 
         $trRecord = TrRecord::find($id);
         $this->authorize('update', $trRecord);
+        $trRecord->fill($request->all())->save();
 
-        $trRecord->part = $validated["part"];
-        $trRecord->menu = $validated["menu"];
-        $trRecord->set_type = $validated["set_type"];
-        $trRecord->weight_first = $validated["weight_first"];
-        $trRecord->reps_first = $validated["reps_first"];
-        $trRecord->weight_second = $request->weight_second;
-        $trRecord->reps_second = $request->reps_second;
-        $trRecord->weight_third = $request->weight_third;
-        $trRecord->reps_third = $request->reps_third;
-        $trRecord->weight_fourth = $request->weight_fourth;
-        $trRecord->reps_fourth = $request->reps_fourth;
-        $trRecord->weight_fifth = $request->weight_fifth;
-        $trRecord->reps_fifth = $request->reps_fifth;
-        $trRecord->memo = $request->memo;
-        if($request->tr_date === null) {
-			$trRecord->tr_date = Carbon::now('Asia/Tokyo');
-		} else {
-			$trRecord->tr_date = $request->tr_date;
-		}
-
-        $trRecord->save();
         return redirect()->route('trrecords.index')->with(
             'message', '修正が完了しました'
         );
