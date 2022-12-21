@@ -13,5 +13,7 @@
         <p>ようこそ、{{ Auth::user()->name }}さん</p>
     @endif
 
+
+
 </div>
 @endsection

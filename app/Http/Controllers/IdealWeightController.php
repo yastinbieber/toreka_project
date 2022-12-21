@@ -186,9 +186,18 @@ class IdealWeightController extends Controller
         return redirect()->route('idealweights.index')->with(
             'message', '修正が完了しました'
         );
-
-        // public function destroy() {
-
-        // }
     }
+
+    public function destroy($id) {
+
+        $idealWeight = IdealWeight::find($id);
+        $this->authorize('delete', $idealWeight);
+
+        $idealWeight->delete();
+
+        return redirect()->route('idealweights.index')->with(
+            'message', 'ボディメイク目標の削除が完了しました'
+        );
+    }
+
 }

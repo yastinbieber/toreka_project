@@ -59,7 +59,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">WeightFirst</label>
                 <div class="col-sm-10">
-                    <input type="number" name="weight_first" class="form-control" value="{{ old('weight_first', $trRecord->weight_first)}}" placeholder="重量を入力ください" min="0">
+                    <input type="number" name="weight_first" class="form-control" value="{{ old('weight_first', $trRecord->weight_first)}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_first')
                     <li>{{$message}}</li>
                     @enderror
@@ -68,7 +68,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">RepsFirst</label>
                 <div class="col-sm-10">
-                    <input type="number" name="reps_first" class="form-control" value="{{ old('reps_first', $trRecord->reps_first)}}" placeholder="回数を入力ください" min="0">
+                    <input type="number" name="reps_first" class="form-control" value="{{ old('reps_first', $trRecord->reps_first)}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_first')
                     <li>{{$message}}</li>
                     @enderror
@@ -78,7 +78,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">WeightSecond</label>
                 <div class="col-sm-10">
-                    <input type="number" name="weight_second" class="form-control" value="{{ old('weight_second', $trRecord->weight_second)}}" placeholder="重量を入力ください" min="0">
+                    <input type="number" name="weight_second" class="form-control" value="{{ old('weight_second', $trRecord->weight_second)}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_second')
                     <li>{{$message}}</li>
                     @enderror
@@ -87,7 +87,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">RepsSecond</label>
                 <div class="col-sm-10">
-                    <input type="number" name="reps_second" class="form-control" value="{{ old('reps_second', $trRecord->reps_second)}}" placeholder="回数を入力ください" min="0">
+                    <input type="number" name="reps_second" class="form-control" value="{{ old('reps_second', $trRecord->reps_second)}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_second')
                     <li>{{$message}}</li>
                     @enderror
@@ -97,7 +97,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">WeightThird</label>
                 <div class="col-sm-10">
-                    <input type="number" name="weight_third" class="form-control" value="{{ old('weight_third', $trRecord->weight_third)}}" placeholder="重量を入力ください" min="0">
+                    <input type="number" name="weight_third" class="form-control" value="{{ old('weight_third', $trRecord->weight_third)}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_third')
                     <li>{{$message}}</li>
                     @enderror
@@ -106,7 +106,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">RepsThird</label>
                 <div class="col-sm-10">
-                    <input type="number" name="reps_third" class="form-control" value="{{ old('reps_third', $trRecord->reps_third)}}" placeholder="回数を入力ください" min="0">
+                    <input type="number" name="reps_third" class="form-control" value="{{ old('reps_third', $trRecord->reps_third)}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_third')
                     <li>{{$message}}</li>
                     @enderror
@@ -116,7 +116,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">WeightFourth</label>
                 <div class="col-sm-10">
-                    <input type="number" name="weight_fourth" class="form-control" value="{{ old('weight_fourth', $trRecord->weight_fourth)}}" placeholder="重量を入力ください" min="0">
+                    <input type="number" name="weight_fourth" class="form-control" value="{{ old('weight_fourth', $trRecord->weight_fourth)}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_fourth')
                     <li>{{$message}}</li>
                     @enderror
@@ -125,7 +125,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">RepsFourth</label>
                 <div class="col-sm-10">
-                    <input type="number" name="reps_fourth" class="form-control" value="{{ old('reps_fourth', $trRecord->reps_fourth)}}" placeholder="回数を入力ください" min="0">
+                    <input type="number" name="reps_fourth" class="form-control" value="{{ old('reps_fourth', $trRecord->reps_fourth)}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_fourth')
                     <li>{{$message}}</li>
                     @enderror
@@ -135,7 +135,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">WeightFifth</label>
                 <div class="col-sm-10">
-                    <input type="number" name="weight_fifth" class="form-control" value="{{ old('weight_fifth', $trRecord->weight_fifth)}}" placeholder="重量を入力ください" min="0">
+                    <input type="number" name="weight_fifth" class="form-control" value="{{ old('weight_fifth', $trRecord->weight_fifth)}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_fifth')
                     <li>{{$message}}</li>
                     @enderror
@@ -144,7 +144,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">RepsFifth</label>
                 <div class="col-sm-10">
-                    <input type="number" name="reps_fifth" class="form-control" value="{{ old('reps_fifth', $trRecord->reps_fifth)}}" placeholder="回数を入力ください" min="0">
+                    <input type="number" name="reps_fifth" class="form-control" value="{{ old('reps_fifth', $trRecord->reps_fifth)}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_fifth')
                     <li>{{$message}}</li>
                     @enderror

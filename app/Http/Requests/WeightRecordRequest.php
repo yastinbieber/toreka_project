@@ -13,7 +13,7 @@ class WeightRecordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class WeightRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'today_weight' => 'required',
+            'date' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'today_weight.required' => '本日の体重の入力は必須です',
+            'date.required' => '日付の入力は必須です',
         ];
     }
 }

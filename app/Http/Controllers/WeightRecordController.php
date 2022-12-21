@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\WeightRecordRequest;
 use App\Models\User;
 use App\Models\IdealWeight;
+use App\Models\WeightRecord;
+use Illuminate\Support\Facades\Auth;
 
 class WeightRecordController extends Controller
 {
@@ -16,7 +18,8 @@ class WeightRecordController extends Controller
      */
     public function index()
     {
-        return view('weightrecord.index');
+        $weightRecords = WeightRecord::orderBy('date', 'desc')->paginate(10);
+        return view('weightrecords.index', compact('weightRecords'));
     }
 
     /**
@@ -26,7 +29,7 @@ class WeightRecordController extends Controller
      */
     public function create()
     {
-        //
+        return view('weightrecords.create');
     }
 
     /**
@@ -35,9 +38,27 @@ class WeightRecordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WeightRecordRequest $request)
     {
-        //
+        $validated = $request->safe()->only([
+            'today_weight',
+            'date',
+        ]);
+
+        $weightRecord = new weightRecord();
+
+        // バリデーション
+        $weightRecord->today_weight = $validated['today_weight'];
+        $weightRecord->date = $validated['date'];
+
+        $weightRecord->user_id = Auth::id();
+        $weightRecord->ideal_weight_id = IdealWeight::where('user_id', '=', Auth::id())->first()->id;
+
+        $weightRecord->save();
+
+        return redirect()->route('weightrecords.index')->with(
+            'message', '登録が完了しました'
+        );
     }
 
     /**
@@ -48,7 +69,10 @@ class WeightRecordController extends Controller
      */
     public function show($id)
     {
-        //
+        $weightRecord = WeightRecord::find($id);
+        return view('weightrecords.show', compact(
+            'weightRecord'
+        ));
     }
 
     /**
@@ -59,7 +83,10 @@ class WeightRecordController extends Controller
      */
     public function edit($id)
     {
-        //
+        $weightRecord = WeightRecord::find($id);
+        $this->authorize('update', $weightRecord);
+
+        return view('weightrecords.edit', compact('weightRecord'));
     }
 
     /**
@@ -69,9 +96,28 @@ class WeightRecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(WeightRecordRequest $request, $id)
     {
-        //
+        $validated = $request->safe()->only([
+            'today_weight',
+            'date',
+        ]);
+
+        $weightRecord = WeightRecord::find($id);
+        $this->authorize('update', $weightRecord);
+
+        // バリデーション
+        $weightRecord->today_weight = $validated['today_weight'];
+        $weightRecord->date = $validated['date'];
+
+        $weightRecord->user_id = Auth::id();
+        $weightRecord->ideal_weight_id = IdealWeight::where('user_id', '=', Auth::id())->first()->id;
+
+        $weightRecord->save();
+
+        return redirect()->route('weightrecords.index')->with(
+            'message', '更新が完了しました'
+        );
     }
 
     /**
@@ -82,6 +128,12 @@ class WeightRecordController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $weightRecord = WeightRecord::find($id);
+        $this->authorize('delete', $weightRecord);
+        $weightRecord->delete();
+
+        return response()->json([
+            'message' => '体重の削除が完了しました',
+        ]);
     }
 }

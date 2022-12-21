@@ -57,7 +57,6 @@ class UserMotivationController extends Controller
         $userMotivation->purpose = $validated['purpose'];
 
         $userMotivation->user_id = Auth::id();
-        // $userMotivation->ideal_weight_id = ;
         $userMotivation->ideal_weight_id = IdealWeight::where('user_id', '=', Auth::id())->first()->id;
 
         $userMotivation->save();
@@ -89,7 +88,7 @@ class UserMotivationController extends Controller
      */
     public function edit($id)
     {
-        $userMotivation = userMotivation::find($id);
+        $userMotivation = UserMotivation::find($id);
         $this->authorize('update', $userMotivation);
 
         return view('usermotivations.edit', compact('userMotivation'));
@@ -134,6 +133,13 @@ class UserMotivationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $userMotivation = UserMotivation::find($id);
+        $this->authorize('delete', $userMotivation);
+
+        $userMotivation->delete();
+
+        return redirect()->route('usermotivations.index')->with(
+            'message', 'ボディメイク目標の削除が完了しました'
+        );
     }
 }

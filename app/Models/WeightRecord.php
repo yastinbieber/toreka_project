@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WeightRecord extends Model
 {
     use HasFactory;
+    protected $fillable = ['today_weight', 'body_fat_percentage', 'date', 'expected_weight'];
 
     public function user() {
         return $this->belongsTo(User::class);

@@ -10,7 +10,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Height</label>
                 <div class="col-sm-10">
-                    <input type="number" name="height" class="form-control" value="{{ old('height')}}" placeholder="身長を入力ください" min="0">
+                    <input type="number" name="height" class="form-control" value="{{ old('height')}}" placeholder="身長を入力ください" min="0" step="0.01">
                     @error('height')
                         <li>{{$message}}</li>
                     @enderror
@@ -19,7 +19,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Weight</label>
                 <div class="col-sm-10">
-                    <input type="number" name="weight" class="form-control" value="{{ old('weight')}}" placeholder="体重を入力ください" min="0">
+                    <input type="number" name="weight" class="form-control" value="{{ old('weight')}}" placeholder="体重を入力ください" min="0" step="0.01">
                     @error('weight')
                         <li>{{$message}}</li>
                     @enderror
@@ -28,7 +28,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">TargetWeight</label>
                 <div class="col-sm-10">
-                    <input type="number" name="target_weight" class="form-control" value="{{ old('target_weight')}}" placeholder="目標体重を入力ください" min="0">
+                    <input type="number" name="target_weight" class="form-control" value="{{ old('target_weight')}}" placeholder="目標体重を入力ください" min="0" step="0.01">
                     @error('target_weight')
                         <li>{{$message}}</li>
                     @enderror

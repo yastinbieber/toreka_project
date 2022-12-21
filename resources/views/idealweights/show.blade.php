@@ -23,6 +23,13 @@
     @can('update', $idealWeight)
         <a class="btn btn-info btn-sm" href="{{ url('idealweights/'.$idealWeight->id .'/' .'edit') }}">編集</a>
     @endcan
+    @can('delete', $idealWeight)
+        <form action="{{ route('idealweights.destroy', $idealWeight->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger btn-sm" type="submit">削除</button>
+        </form>
+    @endcan
 </div>
 
 @endsection
