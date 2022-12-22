@@ -19,7 +19,8 @@ class TrRecordController extends Controller
 
     public function index(Request $request) {
 
-        $trRecords = TrRecord::orderBy('tr_date', 'desc')->paginate(10);
+        $user_id = Auth::id();
+        $trRecords = TrRecord::where('user_id', $user_id)->orderBy('tr_date', 'desc')->paginate(10);
         return view('trrecords.index', compact('trRecords'));
 
     }

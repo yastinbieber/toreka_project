@@ -18,7 +18,8 @@ class WeightRecordController extends Controller
      */
     public function index()
     {
-        $weightRecords = WeightRecord::orderBy('date', 'desc')->paginate(10);
+        $user_id = Auth::id();
+        $weightRecords = WeightRecord::where('user_id', $user_id)->orderBy('date', 'desc')->paginate(10);
         return view('weightrecords.index', compact('weightRecords'));
     }
 

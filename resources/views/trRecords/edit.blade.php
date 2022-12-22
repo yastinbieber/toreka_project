@@ -11,7 +11,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
-                    <input type="datetime-local" name="tr_date" class="form-control" value="{{ old('tr_date', $trRecord->tr_date) }}">
+                    <input type="date" name="tr_date" class="form-control" value="{{ old('tr_date', $trRecord->tr_date) }}">
                     @error('tr_date')
                         <li>{{$message}}</li>
                     @enderror
