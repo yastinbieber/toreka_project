@@ -3,6 +3,11 @@
 @section('content')
 
 <div class="container">
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
     <h4>トレーニングを登録する</h4>
     <div class="border rounded p-5">
         <form method="post" action="{{ url('/trrecords') }}">
@@ -10,7 +15,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
-                    <input type="date" name="tr_date" class="form-control" value="<?php echo date('Y-m-j');?>">
+                    <input type="datetime-local" name="tr_date" class="form-control" value="<?php echo date('Y-m-j H:i', $date1);?>">
                     @error('tr_date')
                         <li>{{$message}}</li>
                     @enderror
@@ -33,16 +38,12 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Menu</label>
                 <div class="col-sm-10">
-                    <select name="menu" id="menu_id" class="form-control">
-                        <option value="" selected="selected">選択してください</option>
-                        <option value="ベンチプレス" data-val="胸">ベンチプレス</option>
-                        <option value="スクワット" data-val="脚">スクワット</option>
-                    </select>
-                    {{-- <select class="form-control" id="menu_id" name="menu">
+                    <select class="form-control" id="menu_id" name="menu">
+                        <option value="" style="display: none;">選択してください</option>
                         @foreach ($trMenu as $index => $name)
                             <option value="{{ $name }}" data-val="">{{ $name }}</option>
                         @endforeach
-                    </select> --}}
+                    </select>
                     @error('menu')
                         <li>{{$message}}</li>
                     @enderror
@@ -58,7 +59,7 @@
                         @endforeach
                     </select>
                     @error('set_type')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -68,7 +69,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="weight_first" class="form-control" value="{{ old('weight_first')}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_first')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -77,7 +78,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="reps_first" class="form-control" value="{{ old('reps_first')}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_first')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -87,7 +88,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="weight_second" class="form-control" value="{{ old('weight_second')}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_second')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -96,7 +97,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="reps_second" class="form-control" value="{{ old('reps_second')}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_second')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -106,7 +107,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="weight_third" class="form-control" value="{{ old('weight_third')}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_third')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -115,7 +116,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="reps_third" class="form-control" value="{{ old('reps_third')}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_third')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -125,7 +126,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="weight_fourth" class="form-control" value="{{ old('weight_fourth')}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_fourth')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -134,7 +135,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="reps_fourth" class="form-control" value="{{ old('reps_fourth')}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_fourth')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -144,7 +145,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="weight_fifth" class="form-control" value="{{ old('weight_fifth')}}" placeholder="重量を入力ください" min="0" step="0.01">
                     @error('weight_fifth')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -153,7 +154,7 @@
                 <div class="col-sm-10">
                     <input type="number" name="reps_fifth" class="form-control" value="{{ old('reps_fifth')}}" placeholder="回数を入力ください" min="0" step="0.01">
                     @error('reps_fifth')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -191,7 +192,7 @@
 })
 </script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
 // セレクトボックスの連動
 // 親カテゴリのselect要素が変更になるとイベントが発生
 $('#part_id').change(function () {
@@ -210,16 +211,15 @@ $('#part_id').change(function () {
         // 子カテゴリのoptionを一旦削除
         $('#menu_id option').remove();
         // DBから受け取ったデータを子カテゴリのoptionにセット
-        // for文
-        // $.each(data, function(key, value) {
-        //     $('#menu_id').append($('<option>').text(value.name).attr('value', key));
-        // })
+        $.each(data, function(key, value) {
+            $('#menu_id').append($('<option>').text(value.name).attr('value', key));
+        });
     })
     .fail(function() {
         console.log('失敗');
     });
 
 });
-</script> --}}
+</script>
 
 @endsection

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TrMenu extends Model
 {
     use HasFactory;
-    protected $fillable = ['menu'];
+    protected $fillable = ['menu', 'tr_part_id'];
 
     public function trPart() {
         return $this->belongsTo(TrPart::class);

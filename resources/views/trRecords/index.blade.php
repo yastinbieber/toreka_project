@@ -4,9 +4,9 @@
 
 <div class="container">
     @if (session('message'))
-    <div class="alert alert-success">
-        {{ session('message') }}
-    </div>
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
     @endif
 
     <div id="alerts"></div>

@@ -8,6 +8,11 @@
             {{ session('message') }}
         </div>
     @endif
+    @if (session('msg'))
+        <div class="alert alert-danger">
+            {{ session('msg') }}
+        </div>
+    @endif
     <h4>目標を設定する</h4>
     <div class="border rounded p-5">
         <form method="post" action="{{ url('/idealweights') }}">
@@ -52,7 +57,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">StartDay</label>
                 <div class="col-sm-10">
-                    <input type="date" name="start_day" class="form-control" value="{{ old('start_day')}}">
+                    <input type="date" name="start_day" class="form-control" value="<?php echo date('Y-m-j');?>">
                 </div>
             </div>
             <div class="row mb-3">

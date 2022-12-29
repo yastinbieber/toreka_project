@@ -16,10 +16,10 @@ class UserMotivationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('usermotivations.index');
-    }
+    // public function index()
+    // {
+    //     return view('usermotivations.index');
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -32,7 +32,9 @@ class UserMotivationController extends Controller
         // ログインユーザーのIdealWeightレコードが作られていたら処理を実行する
         if (IdealWeight::where('user_id', $user_id)->exists()) {
             if (userMotivation::where('user_id', $user_id)->exists()) {
-                return redirect()->route('usermotivations.index')->with(
+                $userMotivation = UserMotivation::where('user_id', $user_id)->first();
+                $userMotivationId = $userMotivation->id;
+                return redirect()->route('usermotivations.show', [$userMotivationId] )->with(
                     'message', 'ボディメイク目標は既に登録済みです'
                 );
             }
@@ -58,6 +60,8 @@ class UserMotivationController extends Controller
             'purpose',
         ]);
 
+        $user_id = Auth::id();
+
         $userMotivation = new userMotivation();
 
         // バリデーション
@@ -66,10 +70,11 @@ class UserMotivationController extends Controller
 
         $userMotivation->user_id = Auth::id();
         $userMotivation->ideal_weight_id = IdealWeight::where('user_id', '=', Auth::id())->first()->id;
-
         $userMotivation->save();
 
-        return redirect()->route('usermotivations.index')->with(
+        $userMotivation = UserMotivation::where('user_id', $user_id)->first();
+        $userMotivationId = $userMotivation->id;
+        return redirect()->route('usermotivations.show', [$userMotivationId])->with(
             'message', '登録が完了しました'
         );
     }
@@ -128,7 +133,7 @@ class UserMotivationController extends Controller
 
         $userMotivation->save();
 
-        return redirect()->route('usermotivations.index')->with(
+        return redirect()->route('usermotivations.show', [$userMotivation->id])->with(
             'message', '修正が完了しました'
         );
     }
@@ -146,7 +151,7 @@ class UserMotivationController extends Controller
 
         $userMotivation->delete();
 
-        return redirect()->route('usermotivations.index')->with(
+        return redirect()->route('usermotivations.create')->with(
             'message', 'ボディメイク目標の削除が完了しました'
         );
     }

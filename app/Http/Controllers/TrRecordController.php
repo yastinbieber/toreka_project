@@ -30,10 +30,12 @@ class TrRecordController extends Controller
         $trParts = TrPart::pluck('part_name', 'id')->toArray();
         $trSettypes = TrSettype::pluck('set_type', 'id')->toArray();
         $trMenu = TrMenu::pluck('menu', 'id', 'tr_part_id')->toArray();
+        $date1 = strtotime('+9 hour');
         return view('trrecords.create', compact(
             'trParts',
             'trSettypes',
             'trMenu',
+            'date1',
         ));
 
     }

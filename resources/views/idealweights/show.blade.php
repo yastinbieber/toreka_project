@@ -2,6 +2,11 @@
 @section('title', '')
 @section('content')
 <div class="container">
+    @if (session('message'))
+        <div class="alert alert-danger">
+            {{ session('message') }}
+        </div>
+    @endif
     <h2>ボディメイク目標</h2>
     <p>{{$idealWeight->height}}</p>
     <p>{{$idealWeight->weight}}</p>
