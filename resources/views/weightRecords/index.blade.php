@@ -3,6 +3,15 @@
 @section('content')
 
 <div class="container">
+
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+
+    <div id="alerts"></div>
+
     @if (Auth::check())
         <p>ようこそ、{{ Auth::user()->name }}さん</p>
     @endif
