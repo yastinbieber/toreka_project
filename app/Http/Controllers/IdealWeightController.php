@@ -13,16 +13,16 @@ use Carbon\Carbon;
 class IdealWeightController extends Controller
 {
     // Indexいらないそのうち消す
-    // public function index() {
-    //     $user_id = Auth::id();
-    //     $idealWeight = IdealWeight::where('user_id', $user_id)->first();
-    //     $idealWeightId = $idealWeight->id;
-    //     if (IdealWeight::where('user_id', $user_id)->exists()) {
-    //         return redirect()->route('idealweights.show',[$idealWeightId]);
-    //     } else {
-    //         return redirect()->route('idealweights.create');
-    //     }
-    // }
+    public function index() {
+        $user_id = Auth::id();
+        $idealWeight = IdealWeight::where('user_id', $user_id)->first();
+        $idealWeightId = $idealWeight->id;
+        if (IdealWeight::where('user_id', $user_id)->exists()) {
+            return redirect()->route('idealweights.show',[$idealWeightId]);
+        } else {
+            return redirect()->route('idealweights.create');
+        }
+    }
 
     public function create() {
         $user_id = Auth::id();

@@ -16,10 +16,17 @@ class UserMotivationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-    //     return view('usermotivations.index');
-    // }
+    public function index()
+    {
+        $user_id = Auth::id();
+        if (userMotivation::where('user_id', $user_id)->exists()) {
+            $userMotivation = UserMotivation::where('user_id', $user_id)->first();
+            $userMotivationId = $userMotivation->id;
+            return redirect()->route('usermotivations.show', [$userMotivationId]);
+        } else {
+            return view('usermotivations.create');
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -37,8 +44,9 @@ class UserMotivationController extends Controller
                 return redirect()->route('usermotivations.show', [$userMotivationId] )->with(
                     'message', 'ボディメイク目標は既に登録済みです'
                 );
+            } else {
+                return view('usermotivations.create');
             }
-            return view('usermotivations.create');
         } else {
             return redirect()->route('idealweights.create')->with(
                 'message', 'まずボディメイク目標から登録しましょう',
