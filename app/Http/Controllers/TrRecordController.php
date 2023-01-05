@@ -27,14 +27,15 @@ class TrRecordController extends Controller
 
     public function create() {
 
-        $trParts = TrPart::pluck('part_name', 'id')->toArray();
-        $trSettypes = TrSettype::pluck('set_type', 'id')->toArray();
-        $trMenu = TrMenu::pluck('menu', 'id', 'tr_part_id')->toArray();
+        $trParts = TrPart::pluck('part_name', 'id');
+        $trSettypes = TrSettype::pluck('set_type', 'id');
+        $trMenus = TrMenu::pluck('menu', 'id');
+        // dd($trMenus);
         $date1 = strtotime('+9 hour');
         return view('trrecords.create', compact(
             'trParts',
             'trSettypes',
-            'trMenu',
+            'trMenus',
             'date1',
         ));
 
@@ -52,7 +53,11 @@ class TrRecordController extends Controller
 
         $trRecord = new TrRecord();
         $trRecord->user_id = Auth::id();
-        $trRecord->fill($request->all())->save();
+        $trRecord->fill($request->all());
+        $trRecord->part = TrPart::find($validated['part'])->part_name;
+        $trRecord->menu = TrMenu::find($validated['menu'])->menu;
+        $trRecord->set_type = TrSettype::find($validated['set_type'])->set_type;
+        $trRecord->save();
 
         return redirect()->route('trrecords.index')->with(
             'message', '登録が完了しました'
@@ -74,17 +79,16 @@ class TrRecordController extends Controller
     public function edit(Request $request, $id) {
 
         $trRecord = TrRecord::find($id);
-        // dd($trRecord);
-        $trParts = TrPart::pluck('part_name', 'id')->toArray();
+        $trParts = TrPart::pluck('part_name', 'id');
         $trSettypes = TrSettype::pluck('set_type', 'id');
-        $trMenu = TrMenu::pluck('menu', 'id', 'tr_part_id');
+        $trMenus = TrMenu::pluck('menu', 'id');
         $this->authorize('update', $trRecord);
 
         return view('trrecords.edit', compact(
             'trRecord',
             'trParts',
             'trSettypes',
-            'trMenu',
+            'trMenus',
         ));
     }
 
@@ -101,7 +105,11 @@ class TrRecordController extends Controller
 
         $trRecord = TrRecord::find($id);
         $this->authorize('update', $trRecord);
-        $trRecord->fill($request->all())->save();
+        $trRecord->fill($request->all());
+        $trRecord->part = TrPart::find($validated['part'])->part_name;
+        $trRecord->menu = TrMenu::find($validated['menu'])->menu;
+        $trRecord->set_type = TrSettype::find($validated['set_type'])->set_type;
+        $trRecord->save();
 
         return redirect()->route('trrecords.index')->with(
             'message', '修正が完了しました'

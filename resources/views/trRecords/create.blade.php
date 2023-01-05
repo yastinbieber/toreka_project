@@ -27,7 +27,7 @@
                     <select class="form-control" id="part_id" name="part">
                         <option value="" style="display: none;">選択してください</option>
                         @foreach ($trParts as $index => $name)
-                            <option value="{{ $name }}">{{ $name }}</option>
+                            <option value="{{ $index }}">{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('part')
@@ -40,8 +40,8 @@
                 <div class="col-sm-10">
                     <select class="form-control" id="menu_id" name="menu">
                         <option value="" style="display: none;">選択してください</option>
-                        @foreach ($trMenu as $index => $name)
-                            <option value="{{ $name }}" data-val="">{{ $name }}</option>
+                        @foreach ($trMenus as $index => $name)
+                            <option value="{{ $index }}" >{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('menu')
@@ -54,8 +54,8 @@
                 <div class="col-sm-10">
                     <select class="form-control" id="settype_id" name="set_type">
                         <option value="" style="display: none;">選択してください</option>
-                        @foreach ($trSettypes as $trSettype)
-                            <option value="{{ $trSettype }}">{{ $trSettype }}</option>
+                        @foreach ($trSettypes as $index => $name)
+                            <option value="{{ $index }}">{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('set_type')
@@ -175,24 +175,6 @@
 </div>
 
 <script type="text/javascript">
-    var $menu = $('select[id="menu_id"]');
-    var original = $menu.html();
-
-    $('select[id="part_id"]').change(function() {
-        var val1 = $(this).val();
-        // $menu.find('option').each(function() {
-        $menu.html(original).find('option').each(function() {
-        var val2 = $(this).data('val');
-        if (val1 === val2) {
-            $(this).show();
-        }else {
-            $(this).hide();
-        }
-    })
-})
-</script>
-
-<script type="text/javascript">
 // セレクトボックスの連動
 // 親カテゴリのselect要素が変更になるとイベントが発生
 $('#part_id').change(function () {
@@ -211,8 +193,9 @@ $('#part_id').change(function () {
         // 子カテゴリのoptionを一旦削除
         $('#menu_id option').remove();
         // DBから受け取ったデータを子カテゴリのoptionにセット
+        console.log(data);
         $.each(data, function(key, value) {
-            $('#menu_id').append($('<option>').text(value.name).attr('value', key));
+            $('#menu_id').append($('<option>').text(value).attr('value', key));
         });
     })
     .fail(function() {

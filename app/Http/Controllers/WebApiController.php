@@ -12,7 +12,7 @@ class WebApiController extends Controller
         $trMenu = TrMenu::where('tr_part_id', $menuVal)->get();
         $result = [];
         foreach ($trMenu as $item) {
-            $result[] = $item->menu;
+            $result[$item->id] = $item->menu;
         }
         return response()->json($result);
     }

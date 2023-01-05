@@ -23,7 +23,8 @@
                     <select class="form-control" id="part_id" name="part">
                         <option value="" style="display: none;">選択してください</option>
                         @foreach ($trParts as $index => $name)
-                            <option value="{{ $name }}">{{ $name }}</option>
+                            {{-- <option value="{{ $index }}" @selected(old('part', $trRecord->part) == $name)>{{ $name }}</option> --}}
+                            <option value="{{ $index }}">{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('part')
@@ -34,16 +35,12 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Menu</label>
                 <div class="col-sm-10">
-                    <select name="menu" id="menu_id" class="form-control">
-                        <option value="" selected="selected">選択してください</option>
-                        <option value="ベンチプレス" data-val="胸">ベンチプレス</option>
-                        <option value="スクワット" data-val="脚">スクワット</option>
-                    </select>
-                    {{-- <select class="form-control" id="menu_id" name="menu">
-                        @foreach ($trMenu as $index => $name)
-                            <option value="{{ $name }}" data-val="">{{ $name }}</option>
+                    <select class="form-control" id="menu_id" name="menu">
+                        <option value="" style="display: none;">選択してください</option>
+                        @foreach ($trMenus as $index => $name)
+                            <option value="{{ $index }}" @selected(old('menu', $trRecord->menu) == $name)>{{ $name }}</option>
                         @endforeach
-                    </select> --}}
+                    </select>
                     @error('menu')
                         <li>{{$message}}</li>
                     @enderror
@@ -54,12 +51,12 @@
                 <div class="col-sm-10">
                     <select class="form-control" id="settype_id" name="set_type">
                         <option value="" style="display: none;">選択してください</option>
-                        @foreach ($trSettypes as $trSettype)
-                            <option value="{{ $trSettype }}">{{ $trSettype }}</option>
+                        @foreach ($trSettypes as $index => $name)
+                            <option value="{{ $index }}" @selected(old('set_type', $trRecord->set_type) == $name)>{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('set_type')
-                    <li>{{$message}}</li>
+                        <li>{{$message}}</li>
                     @enderror
                 </div>
             </div>
@@ -177,21 +174,34 @@
 </div>
 
 <script type="text/javascript">
-    var $menu = $('select[id="menu-id"]');
-    var original = $menu.html();
+    // セレクトボックスの連動
+    // 親カテゴリのselect要素が変更になるとイベントが発生
+    $('#part_id').change(function () {
+        var part_val = $(this).val();
 
-    $('select[id="part-id"]').change(function() {
-        var val1 = $(this).val();
-        // $menu.find('option').each(function() {
-        $menu.html(original).find('option').each(function() {
-        var val2 = $(this).data('val');
-        if (val1 === val2) {
-            $(this).show();
-        }else {
-            $(this).hide();
-        }
-    })
-})
-</script>
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/webapi',
+            type: 'GET',
+            data: {'menu_val' : part_val},
+            datatype: 'json',
+        })
+        .done(function(data) {
+            // 子カテゴリのoptionを一旦削除
+            $('#menu_id option').remove();
+            // DBから受け取ったデータを子カテゴリのoptionにセット
+            console.log(data);
+            $.each(data, function(key, value) {
+                $('#menu_id').append($('<option>').text(value).attr('value', key));
+            });
+        })
+        .fail(function() {
+            console.log('失敗');
+        });
+
+    });
+    </script>
 
 @endsection

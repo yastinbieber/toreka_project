@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TrPart extends Model
 {
     use HasFactory;
-    protected $fillable = ['part'];
+    protected $fillable = ['part_name'];
 
     public function trRecord() {
         return $this->belongsTo(TrRecord::class);
