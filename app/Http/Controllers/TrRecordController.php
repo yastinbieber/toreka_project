@@ -31,12 +31,14 @@ class TrRecordController extends Controller
         $trSettypes = TrSettype::pluck('set_type', 'id');
         $trMenus = TrMenu::pluck('menu', 'id');
         // dd($trMenus);
-        $date1 = strtotime('+9 hour');
+        // $date1 = strtotime('+9 hour');
+        $today = date("Y-m-d");
+        // dd($today);
         return view('trrecords.create', compact(
             'trParts',
             'trSettypes',
             'trMenus',
-            'date1',
+            'today',
         ));
 
     }

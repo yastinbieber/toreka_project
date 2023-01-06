@@ -15,7 +15,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
-                    <input type="datetime-local" name="tr_date" class="form-control" value="<?php echo date('Y-m-j H:i', $date1);?>">
+                    <input type="date" name="tr_date" class="form-control" value="<?php echo date($today);?>">
                     @error('tr_date')
                         <li>{{$message}}</li>
                     @enderror
@@ -27,7 +27,7 @@
                     <select class="form-control" id="part_id" name="part">
                         <option value="" style="display: none;">選択してください</option>
                         @foreach ($trParts as $index => $name)
-                            <option value="{{ $index }}">{{ $name }}</option>
+                            <option value="{{ $index }}" {{ old('part') === "$index" ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('part')
@@ -41,7 +41,7 @@
                     <select class="form-control" id="menu_id" name="menu">
                         <option value="" style="display: none;">選択してください</option>
                         @foreach ($trMenus as $index => $name)
-                            <option value="{{ $index }}" >{{ $name }}</option>
+                            <option value="{{ $index }}" {{ old('menu') === "$index" ? 'selected' : '' }} >{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('menu')
@@ -55,7 +55,7 @@
                     <select class="form-control" id="settype_id" name="set_type">
                         <option value="" style="display: none;">選択してください</option>
                         @foreach ($trSettypes as $index => $name)
-                            <option value="{{ $index }}">{{ $name }}</option>
+                            <option value="{{ $index }}" {{ old('set_type') === "$index" ? 'selected' : '' }} >{{ $name }}</option>
                         @endforeach
                     </select>
                     @error('set_type')

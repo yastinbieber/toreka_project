@@ -10,7 +10,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">日付</label>
                 <div class="col-sm-10">
-                    <input type="date" name="date" class="form-control" value="<?php echo date('Y-m-j');?>">
+                    <input type="date" name="date" class="form-control" value="<?php echo date($today);?>">
                 </div>
             </div>
             <div class="row mb-3">

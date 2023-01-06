@@ -30,7 +30,8 @@ class WeightRecordController extends Controller
      */
     public function create()
     {
-        return view('weightrecords.create');
+        $today = date("Y-m-d");
+        return view('weightrecords.create', compact('today'));
     }
 
     /**
